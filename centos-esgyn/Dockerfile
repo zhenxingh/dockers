@@ -40,7 +40,8 @@ RUN yum clean all
 # Generate ssh host keys
 RUN ssh-keygen -f /etc/ssh/ssh_host_rsa_key -N '' -t rsa
 RUN ssh-keygen -f /etc/ssh/ssh_host_ecdsa_key -N '' -t ecdsa
-RUN ssh-keygen -f /etc/ssh/ssh_host_ed25519_key -N '' -t ed25519
+RUN if [ x${osver} = x7 ]; then ssh-keygen -f /etc/ssh/ssh_host_ed25519_key -N '' -t ed25519; fi
+RUN if [ x${osver} = x6 ]; then ssh-keygen -f /etc/ssh/ssh_host_dsa_key -N '' -t dsa; fi
 
 # Setup ulimit for running esgyndb
 COPY limits.conf /etc/security/limits.conf
@@ -66,11 +67,7 @@ RUN mkdir /home/${user}/.cache
 RUN ln -s /data/share/bower /home/${user}/.cache/bower
 
 # Add environs for building esgyndb
-COPY bashrc /home/${user}/.bashrc
-ENV JAVA_HOME=/usr/lib/jvm/java-1.8.0
-ENV TOOLSDIR=/data/share/esgyn/tools-el${osver}
-ENV MY_LOCAL_SW_DIST=/data/share/esgyn/software
-ENV PATH=${PATH}:$JAVA_HOME/bin:$TOOLSDIR/apache-maven-3.3.3/bin
+COPY bashrc-el${osver} /home/${user}/.bashrc
 
 WORKDIR /home/${user}
 ENTRYPOINT sudo /usr/sbin/sshd && /bin/bash
