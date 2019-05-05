@@ -17,6 +17,8 @@ building the docker images.
 You may also need to change the file gitconfig to your user name and
 email address.
 
+The user name in Dockerfile may also need to be changed.
+
 ## Build
 
 ```shell
