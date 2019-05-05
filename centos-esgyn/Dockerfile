@@ -32,7 +32,12 @@ RUN yum install -y sudo
 
 # Install bower for compiling dbmgr
 RUN yum install -y npm
-RUN npm --registry https://registry.npm.taobao.org install -g bower 
+RUN npm --registry https://registry.npm.taobao.org install -g bower
+
+# For EsgynDB Audit feature
+RUN yum install -y zeromq-devel
+
+RUN yum install -y emacs
 
 # Cleanup yum
 RUN yum clean all
@@ -68,6 +73,9 @@ RUN ln -s /data/share/bower /home/${user}/.cache/bower
 
 # Add environs for building esgyndb
 COPY bashrc-el${osver} /home/${user}/.bashrc
+COPY gdbinit /home/${user}/.gdbinit
+COPY gitconfig /home/${user}/.gitconfig
 
-WORKDIR /home/${user}
-ENTRYPOINT sudo /usr/sbin/sshd && /bin/bash
+WORKDIR /root
+USER root
+ENTRYPOINT /usr/sbin/sshd && /bin/bash
