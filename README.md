@@ -33,7 +33,7 @@ $ docker run -it  \ # run in interactive mode
   --name centos-esgyn7 \ # specify the docker name
   --hostname centos-esgyn7 \ # docker hostname
   --privileged \ # enable ulimit in docker
-  -d /data:/data \ # mount volumn
+  -v /data:/data \ # mount volumn
   centos-esgyn:7 # docker image to run
 ```
 
