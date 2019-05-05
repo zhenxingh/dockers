@@ -19,19 +19,23 @@ email address.
 
 ## Build
 
+```shell
 $ make all
+```
 
 This will build docker images for both CentOS 6 and CentOS 7. The name
 of the images are centos-esgyn:6 and centos-esgyn:7 respectively.
 
 ## Run
 
+```shell
 $ docker run -it  \ # run in interactive mode
   --name centos-esgyn7 \ # specify the docker name
   --hostname centos-esgyn7 \ # docker hostname
   --privileged \ # enable ulimit in docker
   -d /data:/data \ # mount volumn
   centos-esgyn:7 # docker image to run
+```
 
 ## Running CentOS 6 Problem
 
