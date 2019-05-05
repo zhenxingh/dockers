@@ -1,6 +1,6 @@
 ARG osver=7
 FROM centos:${osver}
-ARG user=hezx
+ARG user=${user:-esgyn}
 ARG osver=7
 
 # Install building environment dependencies
